@@ -7,7 +7,6 @@ on:
 
 env:
   PROJECT_PATH: 'src/Basionix.BaseEntities.EntityFramework.Interceptors/Basionix.BaseEntities.EntityFramework.Interceptors.csproj'
-  TEST_PROJECT_PATH: 'src/Basionix.BaseEntities.EntityFramework.Interceptors.Tests/Basionix.BaseEntities.EntityFramework.Interceptors.Tests.csproj'
   PACKAGE_OUTPUT_DIR: ${{ github.workspace }}/output
   NUGET_SOURCE_URL: 'https://api.nuget.org/v3/index.json'
 
