@@ -7,6 +7,7 @@ on:
 
 env:
   PROJECT_PATH: 'src/Basionix.BaseEntities.EntityFramework.Interceptors/Basionix.BaseEntities.EntityFramework.Interceptors.csproj'
+  TEST_PROJECT_PATH: 'src/Basionix.BaseEntities.EntityFramework.Interceptors.Tests/Basionix.BaseEntities.EntityFramework.Interceptors.Tests.csproj'
   PACKAGE_OUTPUT_DIR: ${{ github.workspace }}/output
   NUGET_SOURCE_URL: 'https://api.nuget.org/v3/index.json'
 
@@ -24,10 +25,13 @@ jobs:
         dotnet-version: '8.x'
 
     - name: 'Restore packages'
-      run: dotnet restore ${{ env.PROJECT_PATH }}
+      run: dotnet restore
 
     - name: 'Build project'
-      run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release
+      run: dotnet build --no-restore --configuration Release
+
+    - name: 'Run tests with .NET CLI'
+      run: dotnet test -l trx --blame --no-build --configuration Release
     
     - name: 'Get version'
       id: version
