@@ -1,10 +1,12 @@
-﻿namespace Basionix.BaseEntities.EntityFramework.Interceptors.Tests;
-
-using System;
-
-public class SoftDeletableEntity : AbstractEntity<int>, IAmSoftDeletable
+﻿#nullable enable
+namespace Basionix.BaseEntities.EntityFramework.Interceptors.Tests.TestEntities
 {
-    public bool IsDeleted { get; set; }
-    public DateTimeOffset? DeletedAt { get; set; }
-    public string? DeletedBy { get; set; }
+    using System;
+
+    public class SoftDeletableEntity : AbstractEntity<int>, IAmSoftDeletable
+    {
+        public bool IsDeleted { get; set; }
+        public DateTimeOffset? DeletedAt { get; set; }
+        public string? DeletedBy { get; set; }
+    }
 }

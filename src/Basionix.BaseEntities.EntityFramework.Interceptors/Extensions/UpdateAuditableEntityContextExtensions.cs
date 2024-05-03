@@ -1,26 +1,27 @@
-﻿namespace Basionix.BaseEntities.EntityFramework.Interceptors;
-
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-
-internal static class UpdateAuditableEntityContextExtensions
+﻿namespace Basionix.BaseEntities.EntityFramework.Interceptors.Extensions
 {
-    internal static void UpdateAuditableEntities(this DbContext context, DateTimeOffset actionExecutedDateTime, string userWhoPerformedTheAction)
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.ChangeTracking;
+
+    internal static class UpdateAuditableEntityContextExtensions
     {
-        var entities = context.ChangeTracker.Entries<IAmAuditable>().ToList();
-
-        foreach (EntityEntry<IAmAuditable> entry in entities)
+        internal static void UpdateAuditableEntities(this DbContext context, DateTimeOffset actionExecutedDateTime, string userWhoPerformedTheAction)
         {
-            if (entry.State == EntityState.Added)
-            {
-                entry.SetCurrentPropertyValue(nameof(IAmAuditable.CreatedAt), actionExecutedDateTime);
-                entry.SetCurrentPropertyValue(nameof(IAmAuditable.CreatedBy), userWhoPerformedTheAction);
-            }
+            var entities = context.ChangeTracker.Entries<IAmAuditable>().ToList();
 
-            if (entry.State == EntityState.Modified)
+            foreach (EntityEntry<IAmAuditable> entry in entities)
             {
-                entry.SetCurrentPropertyValue(nameof(IAmAuditable.UpdatedAt), actionExecutedDateTime);
-                entry.SetCurrentPropertyValue(nameof(IAmAuditable.LastUpdatedBy), userWhoPerformedTheAction);
+                if (entry.State == EntityState.Added)
+                {
+                    entry.SetCurrentPropertyValue(nameof(IAmAuditable.CreatedAt), actionExecutedDateTime);
+                    entry.SetCurrentPropertyValue(nameof(IAmAuditable.CreatedBy), userWhoPerformedTheAction);
+                }
+
+                if (entry.State == EntityState.Modified)
+                {
+                    entry.SetCurrentPropertyValue(nameof(IAmAuditable.UpdatedAt), actionExecutedDateTime);
+                    entry.SetCurrentPropertyValue(nameof(IAmAuditable.LastUpdatedBy), userWhoPerformedTheAction);
+                }
             }
         }
     }

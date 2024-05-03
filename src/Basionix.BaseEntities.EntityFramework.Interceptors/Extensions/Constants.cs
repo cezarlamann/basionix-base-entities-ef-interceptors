@@ -1,7 +1,8 @@
-﻿namespace Basionix.BaseEntities.EntityFramework.Interceptors;
-
-internal class Constants
+﻿namespace Basionix.BaseEntities.EntityFramework.Interceptors.Extensions
 {
-    // Size of a regular-formatted System.Guid
-    internal const int MinimumUserStringLength = 36;
+    internal static class Constants
+    {
+        // Size of a regular-formatted System.Guid
+        internal const int MinimumUserStringLength = 36;
+    }
 }

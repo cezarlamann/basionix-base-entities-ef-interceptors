@@ -1,48 +1,53 @@
-﻿namespace Basionix.BaseEntities.EntityFramework.Interceptors;
-
-using System.Threading;
-using System.Threading.Tasks;
-
-using Microsoft.EntityFrameworkCore.Diagnostics;
-
-public class UpdateDeletableEntityInterceptor : SaveChangesInterceptor
+﻿namespace Basionix.BaseEntities.EntityFramework.Interceptors
 {
-    private readonly IDateTimeProvider _dateTime;
-    private readonly IActionContextUserProvider _userProvider;
+    using System.Threading;
+    using System.Threading.Tasks;
 
-    public UpdateDeletableEntityInterceptor(
-        IDateTimeProvider dateTimeProvider,
-        IActionContextUserProvider userProvider)
-    {
-        ArgumentNullException.ThrowIfNull(dateTimeProvider);
-        ArgumentNullException.ThrowIfNull(userProvider);
-        _dateTime = dateTimeProvider;
-        _userProvider = userProvider;
-    }
+    using Extensions;
 
-    public override ValueTask<InterceptionResult<int>> SavingChangesAsync(DbContextEventData eventData, InterceptionResult<int> result, CancellationToken cancellationToken = default)
+    using Interfaces;
+
+    using Microsoft.EntityFrameworkCore.Diagnostics;
+
+    public class UpdateDeletableEntityInterceptor : SaveChangesInterceptor
     {
-        if (eventData.Context is not null)
+        private readonly IDateTimeProvider _dateTime;
+        private readonly IActionContextUserProvider _userProvider;
+
+        public UpdateDeletableEntityInterceptor(
+            IDateTimeProvider dateTimeProvider,
+            IActionContextUserProvider userProvider)
         {
-            var utcNow = _dateTime.UtcNowOffset;
-            var createdOrModifiedBy = _userProvider.GetActionExecutingUser();
-
-            eventData.Context.UpdateDeletableEntities(utcNow, createdOrModifiedBy);
+            ArgumentNullException.ThrowIfNull(dateTimeProvider);
+            ArgumentNullException.ThrowIfNull(userProvider);
+            _dateTime = dateTimeProvider;
+            _userProvider = userProvider;
         }
 
-        return base.SavingChangesAsync(eventData, result, cancellationToken);
-    }
-
-    public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
-    {
-        if (eventData.Context is not null)
+        public override ValueTask<InterceptionResult<int>> SavingChangesAsync(DbContextEventData eventData, InterceptionResult<int> result, CancellationToken cancellationToken = default)
         {
-            var utcNow = _dateTime.UtcNowOffset;
-            var createdOrModifiedBy = _userProvider.GetActionExecutingUser();
+            if (eventData.Context is not null)
+            {
+                var utcNow = _dateTime.UtcNowOffset;
+                var createdOrModifiedBy = _userProvider.GetActionExecutingUser();
 
-            eventData.Context.UpdateDeletableEntities(utcNow, createdOrModifiedBy);
+                eventData.Context.UpdateDeletableEntities(utcNow, createdOrModifiedBy);
+            }
+
+            return base.SavingChangesAsync(eventData, result, cancellationToken);
         }
 
-        return base.SavingChanges(eventData, result);
+        public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
+        {
+            if (eventData.Context is not null)
+            {
+                var utcNow = _dateTime.UtcNowOffset;
+                var createdOrModifiedBy = _userProvider.GetActionExecutingUser();
+
+                eventData.Context.UpdateDeletableEntities(utcNow, createdOrModifiedBy);
+            }
+
+            return base.SavingChanges(eventData, result);
+        }
     }
 }

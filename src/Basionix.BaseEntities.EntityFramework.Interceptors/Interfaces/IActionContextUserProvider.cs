@@ -1,6 +1,7 @@
-﻿namespace Basionix.BaseEntities.EntityFramework.Interceptors;
-
-public interface IActionContextUserProvider
+﻿namespace Basionix.BaseEntities.EntityFramework.Interceptors.Interfaces
 {
-    public string GetActionExecutingUser();
+    public interface IActionContextUserProvider
+    {
+        public string GetActionExecutingUser();
+    }
 }
