@@ -4,6 +4,24 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <PackageId>Basionix.BaseEntities.EntityFramework.Interceptors</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Cezar Augustus Lamann</Authors>
+    <Company></Company>
+    <Product>Basionix Base Entities - Entity Framework Interceptors</Product>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <NeutralLanguage>en</NeutralLanguage>
+    <Description>Interceptors and configuration convenience classes for the project "Basionix Base Entities"</Description>
+    <Copyright>Cezar Augustus Lamann, 2024</Copyright>
+    <PackageLicenseUrl>https://github.com/cezarlamann/basionix-base-entities-ef-interceptors/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/cezarlamann/basionix-base-entities-ef-interceptors</PackageProjectUrl>
+    <PackageIconUrl></PackageIconUrl>
+    <RepositoryUrl>https://github.com/cezarlamann/basionix-base-entities-ef-interceptors</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags></PackageTags>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
